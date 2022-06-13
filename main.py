@@ -307,11 +307,20 @@ while run:
                 playing = True
                 beat_name = ''
                 typing = False 
-            if entry_rectangle.collidepoint(event.pos):
+            elif entry_rectangle.collidepoint(event.pos):
                 if typing:
                     typing = False 
                 elif not typing:
                     typing = True
+            elif saving_button.collidepoint(event.pos):
+                file = open('saved_beats.txt','w')
+                saved_beats.append(f"name: {beat_name}, beats: {beats_count}, bpm: {bpm}, selected: {clicked}")
+                for i in range(len(saved_beats)):
+                    file.write("\n" + str(saved_beats))
+                file.close()
+                save_menu = False
+                typing = False
+                beat_name = ''
         if event.type == pygame.TEXTINPUT and typing: 
             beat_name += event.text
         if event.type == pygame.KEYDOWN:
